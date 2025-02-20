@@ -351,7 +351,6 @@ OSScTask* __scTaskReady(OSScTask* t) {
  * client if it is.
  */
 s32 __scTaskComplete(OSSched* sc, OSScTask* t) {
-    int rv;
     static int firsttime = 1;
 
     if ((t->state & OS_SC_RCP_MASK) == 0) { /* none of the needs bits set */
@@ -365,7 +364,7 @@ s32 __scTaskComplete(OSSched* sc, OSScTask* t) {
 #ifdef SC_LOGGING
         osLogEvent(l, 504, 1, t);
 #endif
-        rv = osSendMesg(t->msgQ, t->msg, OS_MESG_BLOCK);
+        osSendMesg(t->msgQ, t->msg, OS_MESG_BLOCK);
 
         if (t->list.t.type == M_GFXTASK) {
             if ((t->flags & OS_SC_SWAPBUFFER) && (t->flags & OS_SC_LAST_TASK)) {
@@ -424,8 +423,6 @@ void __scAppendList(OSSched* sc, OSScTask* t) {
  *
  */
 void __scExec(OSSched* sc, OSScTask* sp, OSScTask* dp) {
-    int rv;
-
 #ifdef SC_LOGGING
     osLogEvent(l, 511, 2, sp, dp);
 #endif
@@ -454,12 +451,10 @@ void __scExec(OSSched* sc, OSScTask* sp, OSScTask* dp) {
 #ifdef SC_LOGGING
         osLogEvent(l, 523, 3, dp, dp->list.t.output_buff, (u32)*dp->list.t.output_buff_size);
 #endif
-        rv = osDpSetNextBuffer(dp->list.t.output_buff, *dp->list.t.output_buff_size);
+        assert(osDpSetNextBuffer(dp->list.t.output_buff, *dp->list.t.output_buff_size) == 0);
 
         dp_busy = 1;
         dpCount = 0;
-
-        assert(rv == 0);
 
         sc->curRDPTask = dp;
     }
@@ -539,7 +534,7 @@ s32 __scSchedule(OSSched* sc, OSScTask** sp, OSScTask** dp, s32 availRCP) {
                                 *dp = gfx;
                                 avail &= ~OS_SC_DP;
 
-                                if (avail & OS_SC_DP == 0)
+                                if ((avail & OS_SC_DP) == 0)
                                     assert(sc->curRDPTask == gfx);
                             }
 

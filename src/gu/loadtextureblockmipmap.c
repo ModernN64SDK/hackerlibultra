@@ -43,7 +43,7 @@ struct Tile {
 
 /* tram mipmaps */
 static struct Tile mipmap[MM_MAX_LEVEL + 1] ALIGNED(0x8);
-static struct texelSizeParams sizeParams[4] = { 16, 3, 1, 0, 8, 2, 2, 1, 4, 1, 4, 2, 2, 0, 8, 3 };
+static struct texelSizeParams sizeParams[4] = { { 16, 3, 1, 0 }, { 8, 2, 2, 1 }, { 4, 1, 4, 2 }, { 2, 0, 8, 3 } };
 
 static int max_mipmap;
 static unsigned char* tram;
@@ -493,7 +493,7 @@ int guLoadTextureBlockMipMap(Gfx** glistp, unsigned char* tbuf, Image* im, unsig
     /*
      * Add entries for texture loading and rendering in DL
      */
-    stuffDisplayList(glistp, im, tbuf, startTile, pal, cms, cmt, masks, maskt, shifts, shiftt);
+    stuffDisplayList(glistp, im, (char*)tbuf, startTile, pal, cms, cmt, masks, maskt, shifts, shiftt);
 
     return errNo;
 } /* end guLoadTextureBlockMipMap */
@@ -532,7 +532,7 @@ static void stuffDisplayList(Gfx** glistp, Image* im, char* tbuf, unsigned char 
                              unsigned char shifts, unsigned char shiftt) {
     int tile;
     int Smask, Tmask;
-    int Sshift, Tshift;
+    int Sshift = 0, Tshift = 0;
 
     /*
      * set LOADTILE for loading texture

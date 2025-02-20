@@ -6,6 +6,7 @@
 
 #include "PR/os_internal.h"
 #include "PRinternal/controller.h"
+#include "PRinternal/macros.h"
 #include "PR/os_voice.h"
 #include "voiceinternal.h"
 
@@ -32,6 +33,7 @@ s32 osVoiceGetReadData(OSVoiceHandle* hd, OSVoiceData* micdata) {
             if ((c != 0) && (c != 7)) {
                 return CONT_ERR_NOT_READY;
             }
+            FALLTHROUGH;
         case 2:
             hd->__mode = 2;
 
@@ -43,7 +45,7 @@ s32 osVoiceGetReadData(OSVoiceHandle* hd, OSVoiceData* micdata) {
 
             *(u32*)temp = 0x600;
             ERRCK(__osVoiceContWrite4(hd->__mq, hd->__channel, 0, temp));
-
+            FALLTHROUGH;
         case 3:
             hd->__mode = 3;
 
@@ -75,6 +77,7 @@ s32 osVoiceGetReadData(OSVoiceHandle* hd, OSVoiceData* micdata) {
             if ((c == 0) || (hd->cmd_status == 0)) {
                 break;
             }
+            FALLTHROUGH;
         case 4:
             hd->__mode = 4;
 

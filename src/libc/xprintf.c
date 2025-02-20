@@ -105,7 +105,7 @@ int _Printf(void* pfn(void*, const char*, size_t), void* arg, const char* fmt, v
             if (!(x.flags & FLAGS_MINUS)) {
                 int i, j;
                 if (0 < (x.width)) {
-                    i, j = x.width;
+                    j = x.width;
                     for (; 0 < j; j -= i) {
                         i = MAX_PAD < (unsigned int)j ? (int)MAX_PAD : j;
                         PUT(spaces, i);

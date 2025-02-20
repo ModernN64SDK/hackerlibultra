@@ -64,7 +64,7 @@ Acmd* alAdpcmPull(void* filter, s16* outp, s32 outCount, s32 sampleOffset, Acmd*
     inp = AL_DECODER_IN;
     aLoadADPCM(ptr++, f->bookSize, K0_TO_PHYS(f->table->waveInfo.adpcmWave.book->book));
 
-    looped = (outCount + f->sample > f->loop.end) && (f->loop.count != 0);
+    looped = ((u32)(outCount + f->sample) > f->loop.end) && (f->loop.count != 0);
     if (looped)
         nSam = f->loop.end - f->sample;
     else
@@ -121,13 +121,13 @@ Acmd* alAdpcmPull(void* filter, s16* outp, s32 outCount, s32 sampleOffset, Acmd*
              * -1 is loop forever - the loop count is not exact now
              * for small loops!
              */
-            if ((f->loop.count != -1) && (f->loop.count != 0))
+            if ((f->loop.count != 0xFFFFFFFF) && (f->loop.count != 0))
                 f->loop.count--;
 
             /*
              * What's left to compute.
              */
-            nSam = MIN(outCount, f->loop.end - f->loop.start);
+            nSam = MIN((u32)outCount, f->loop.end - f->loop.start);
             tsam = nSam - ADPCMFSIZE + f->lastsam;
             if (tsam < 0)
                 tsam = 0;
@@ -220,7 +220,7 @@ Acmd* alRaw16Pull(void* filter, s16* outp, s32 outCount, s32 sampleOffset, Acmd*
     if (outCount == 0)
         return ptr;
 
-    if ((outCount + f->sample > f->loop.end) && (f->loop.count != 0)) {
+    if (((u32)(outCount + f->sample) > f->loop.end) && (f->loop.count != 0)) {
 
         nSam = f->loop.end - f->sample;
         nbytes = nSam << 1;
@@ -254,13 +254,13 @@ Acmd* alRaw16Pull(void* filter, s16* outp, s32 outCount, s32 sampleOffset, Acmd*
             /*
              * -1 is loop forever
              */
-            if ((f->loop.count != -1) && (f->loop.count != 0))
+            if ((f->loop.count != 0xFFFFFFFF) && (f->loop.count != 0))
                 f->loop.count--;
 
             /*
              * What to compute.
              */
-            nSam = MIN(outCount, f->loop.end - f->loop.start);
+            nSam = MIN((u32)outCount, f->loop.end - f->loop.start);
             nbytes = nSam << 1;
 
             /*
@@ -418,6 +418,8 @@ s32 alLoadParam(void* filter, s32 paramID, void* param) {
         default:
             break;
     }
+
+    return 0;
 }
 
 Acmd* _decodeChunk(Acmd* ptr, ALLoadFilter* f, s32 tsam, s32 nbytes, s16 outp, s16 inp, u32 flags) {

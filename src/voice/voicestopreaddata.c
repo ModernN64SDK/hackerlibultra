@@ -12,7 +12,7 @@
 
 s32 osVoiceStopReadData(OSVoiceHandle* hd) {
     s32 ret;
-    s32 i;
+    s32 i = 0;
     u8 stat;
     u8 temp[4];
 
@@ -48,7 +48,7 @@ s32 osVoiceStopReadData(OSVoiceHandle* hd) {
         } while ((ret == CONT_ERR_VOICE_NO_RESPONSE) && (i < 20));
     }
     if (i >= 20) {
-        ret == CONT_ERR_VOICE_NO_RESPONSE;
+        ret = CONT_ERR_VOICE_NO_RESPONSE;
     }
 
     return ret;

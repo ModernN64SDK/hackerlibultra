@@ -19,7 +19,7 @@
  */
 s32 osAiSetNextBuffer(void* bufPtr, u32 size) {
     static u8 hdwrBugFlag = FALSE;
-    char* bptr;
+    u8* bptr;
 
     if (__osAiDeviceBusy()) {
         return -1;
