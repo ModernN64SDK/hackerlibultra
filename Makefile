@@ -19,20 +19,20 @@ endif
 # Whether to colorize build messages
 COLOR ?= 1
 
-# VERSION 	   - selects the version of the library to build
+# TARGET 	   - selects the version of the library to build
 #   libultra	 - standard library
 #   libultra_d   - debug library
 #   libultra_rom - final ROM library
-VERSION ?= libultra_rom
-$(eval $(call validate-option,VERSION,libultra libultra_d libultra_rom))
+TARGET ?= libultra_rom
+$(eval $(call validate-option,TARGET,libultra libultra_d libultra_rom))
 
-ifeq      ($(VERSION),libultra)
+ifeq      ($(TARGET),libultra)
 	OPT_FLAGS := -Os -ggdb3 -ffast-math -fno-unsafe-math-optimizations
 	DEFINES += NDEBUG=1
-else ifeq ($(VERSION),libultra_d)
+else ifeq ($(TARGET),libultra_d)
 	OPT_FLAGS := -Og -ggdb3 -ffast-math -fno-unsafe-math-optimizations
 	DEFINES += _DEBUG=1
-else ifeq ($(VERSION),libultra_rom)
+else ifeq ($(TARGET),libultra_rom)
 	OPT_FLAGS := -Os -ggdb3 -ffast-math -fno-unsafe-math-optimizations
 	DEFINES += NDEBUG=1
 	DEFINES += _FINALROM=1
@@ -59,11 +59,9 @@ else
   $(error Unable to detect a suitable MIPS toolchain installed)
 endif
 
-TARGET := $(VERSION)
-
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
   $(info ==== Build Options ====)
-  $(info Version:        $(VERSION))
+  $(info Version:        $(TARGET))
   $(info =======================)
 endif
 
@@ -72,7 +70,7 @@ endif
 #==============================================================================#
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
-BUILD_DIR      := $(BUILD_DIR_BASE)/$(VERSION)
+BUILD_DIR      := $(BUILD_DIR_BASE)/$(TARGET)
 LIB            := $(BUILD_DIR)/$(TARGET).a
 
 # Directories containing source files
@@ -180,21 +178,21 @@ $(BUILD_DIR)/%.o: %.s
 
 # Creating final library file
 $(LIB): $(O_FILES)
-	@$(PRINT) "$(GREEN)Creating $(VERSION):  $(BLUE)$@ $(NO_COL)\n"
+	@$(PRINT) "$(GREEN)Creating $(TARGET):  $(BLUE)$@ $(NO_COL)\n"
 	$(V)$(AR) rcs -o $@ $(O_FILES)
 
 all: $(BUILD_DIR_BASE)/libultra.a $(BUILD_DIR_BASE)/libultra_d.a $(BUILD_DIR_BASE)/libultra_rom.a
 
 $(BUILD_DIR_BASE)/libultra.a: 
-	$(V)$(MAKE) VERSION=libultra
+	$(V)$(MAKE) TARGET=libultra
 	$(V)cp $(BUILD_DIR_BASE)/libultra/libultra.a $(BUILD_DIR_BASE)
 
 $(BUILD_DIR_BASE)/libultra_d.a:
-	$(V)$(MAKE) VERSION=libultra_d
+	$(V)$(MAKE) TARGET=libultra_d
 	$(V)cp $(BUILD_DIR_BASE)/libultra_d/libultra_d.a $(BUILD_DIR_BASE)
 
 $(BUILD_DIR_BASE)/libultra_rom.a:
-	$(V)$(MAKE) VERSION=libultra_rom
+	$(V)$(MAKE) TARGET=libultra_rom
 	$(V)cp $(BUILD_DIR_BASE)/libultra_rom/libultra_rom.a $(BUILD_DIR_BASE)
 
 include install.mk
