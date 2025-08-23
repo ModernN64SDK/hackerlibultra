@@ -82,57 +82,57 @@ static void* kmc_proutSyncPrintf(void* str, const char* buf, int n) {
 extern u32 __kmc_pt_mode;
 
 void __osInitialize_kmc(void) {
-/*
-    if (!__kmc_pt_mode) {
-        int (*fnc)();
-        unsigned int* src;
-        unsigned int* dst;
-        unsigned int monadr;
-        volatile unsigned int* mon;
-        volatile unsigned int* stat;
+    /*
+        if (!__kmc_pt_mode) {
+            int (*fnc)();
+            unsigned int* src;
+            unsigned int* dst;
+            unsigned int monadr;
+            volatile unsigned int* mon;
+            volatile unsigned int* stat;
 
-        stat = (unsigned*)0xbff08004;
-        mon = (unsigned*)0xBFF00000;
-        if (*mon != 0x4B4D4300) {
-            return;
-        }
-
-        src = (unsigned*)__ptExceptionPreamble;
-        dst = (unsigned*)E_VEC;
-        *dst++ = *src++;
-        *dst++ = *src++;
-        *dst++ = *src++;
-        src += 2;
-        dst += 2;
-        *dst++ = *src++;
-        *dst++ = *src++;
-        *dst++ = *src++;
-
-        osWritebackDCache(E_VEC, 0x24);
-        osInvalICache(E_VEC, 0x24);
-
-        __kmc_pt_mode = TRUE;
-
-        if ((*stat & 0x10) == 0) {
-            monadr = *(mon + 1);
-            if (monadr != 0xBFF00000) {
-                unsigned int* src;
-                unsigned int* dst = monadr | 0x20000000;
-                unsigned int ct = 0x2000 / 4;
-
-                src = 0xBFF00000;
-
-                while (ct != 0) {
-                    *dst++ = *src++;
-                    ct--;
-                }
+            stat = (unsigned*)0xbff08004;
+            mon = (unsigned*)0xBFF00000;
+            if (*mon != 0x4B4D4300) {
+                return;
             }
-            fnc = monadr + 8;
-            fnc(0x4B4D4300, 0);
+
+            src = (unsigned*)__ptExceptionPreamble;
+            dst = (unsigned*)E_VEC;
+            *dst++ = *src++;
+            *dst++ = *src++;
+            *dst++ = *src++;
+            src += 2;
+            dst += 2;
+            *dst++ = *src++;
+            *dst++ = *src++;
+            *dst++ = *src++;
+
+            osWritebackDCache(E_VEC, 0x24);
+            osInvalICache(E_VEC, 0x24);
+
+            __kmc_pt_mode = TRUE;
+
+            if ((*stat & 0x10) == 0) {
+                monadr = *(mon + 1);
+                if (monadr != 0xBFF00000) {
+                    unsigned int* src;
+                    unsigned int* dst = monadr | 0x20000000;
+                    unsigned int ct = 0x2000 / 4;
+
+                    src = 0xBFF00000;
+
+                    while (ct != 0) {
+                        *dst++ = *src++;
+                        ct--;
+                    }
+                }
+                fnc = monadr + 8;
+                fnc(0x4B4D4300, 0);
+            }
+            __printfunc = kmc_proutSyncPrintf;
         }
-        __printfunc = kmc_proutSyncPrintf;
-    }
-*/
+    */
 }
 int __checkHardware_kmc(void) {
     volatile unsigned int* mon = (unsigned*)0xBFF00000;
