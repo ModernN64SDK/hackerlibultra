@@ -82,6 +82,7 @@ static void* kmc_proutSyncPrintf(void* str, const char* buf, int n) {
 extern u32 __kmc_pt_mode;
 
 void __osInitialize_kmc(void) {
+/*
     if (!__kmc_pt_mode) {
         int (*fnc)();
         unsigned int* src;
@@ -131,8 +132,8 @@ void __osInitialize_kmc(void) {
         }
         __printfunc = kmc_proutSyncPrintf;
     }
+*/
 }
-
 int __checkHardware_kmc(void) {
     volatile unsigned int* mon = (unsigned*)0xBFF00000;
 

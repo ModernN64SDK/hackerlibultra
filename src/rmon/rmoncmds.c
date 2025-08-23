@@ -25,7 +25,7 @@ static FUNPTR dispatchTable[] = {
     NotImplemented,      NotImplemented,      NotImplemented,       NotImplemented,    __rmonGetSRegs,
     __rmonSetSRegs,      __rmonGetVRegs,      __rmonSetVRegs,       NotImplemented,
 };
-
+/*
 int __rmonExecute(KKHeader* request) {
     int retval;
     KKHeader reply;
@@ -42,5 +42,5 @@ int __rmonExecute(KKHeader* request) {
     }
     return retval;
 }
-
+*/
 #endif

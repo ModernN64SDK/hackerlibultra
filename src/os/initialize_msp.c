@@ -82,6 +82,7 @@ static void* msp_proutSyncPrintf(void* str, const char* buf, int n) {
 extern u32 __kmc_pt_mode;
 
 void __osInitialize_msp(void) {
+    /*
     if (!__kmc_pt_mode) {
         int (*fnc)();
         unsigned int* src;
@@ -131,6 +132,7 @@ void __osInitialize_msp(void) {
         }
         __printfunc = msp_proutSyncPrintf;
     }
+    */
 }
 
 int __checkHardware_msp(void) {
