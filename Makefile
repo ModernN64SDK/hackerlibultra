@@ -6,7 +6,7 @@ include util.mk
 
 WORKING_DIR := $(shell pwd)
 
-DEFINES = MODERN_CC=1
+DEFINES :=
 
 SRC_DIRS :=
 
@@ -144,7 +144,7 @@ clean:
 ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS))
 
 # Make sure build directory exists before compiling anything
-DUMMY != mkdir -p $(ALL_DIRS)
+$(shell mkdir -p $(ALL_DIRS))
 
 $(BUILD_DIR)/src/voice/%.o: CFLAGS += -I$(WORKING_DIR)/src/voice
 $(BUILD_DIR)/src/voice/%.o: DEFINES += LANG_JAPANESE=1
@@ -162,19 +162,19 @@ $(BUILD_DIR)/src/sp/spriteex2.o: GBIDEFINE :=
 # Compile C code
 $(BUILD_DIR)/src/voice/%.o: src/voice/%.c
 	$(call print,Compiling:,$<,$@)
-	$(V)tools/compile_sjis.py -D__CC=$(CC) -D__BUILD_DIR=$(BUILD_DIR) -c $(CFLAGS) -MMD -MF $(BUILD_DIR)/src/voice/$*.d  -o $@ $<
+	$(V)tools/compile_sjis.py -D__CC=$(CC) -D__BUILD_DIR=$(BUILD_DIR) -c $(CFLAGS) -MMD -MP -o $@ $<
 
 $(BUILD_DIR)/%.o: %.c
 	$(call print,Compiling:,$<,$@)
-	$(V)$(CC) -c $(CFLAGS) $(GBIDEFINE) -MMD -MF $(BUILD_DIR)/$*.d  -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(GBIDEFINE) -MMD -MP -o $@ $<
 $(BUILD_DIR)/%.o: $(BUILD_DIR)/%.c
 	$(call print,Compiling:,$<,$@)
-	$(V)$(CC) -c $(CFLAGS) $(GBIDEFINE) -MMD -MF $(BUILD_DIR)/$*.d  -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(GBIDEFINE) -MMD -MP -o $@ $<
 
 # Assemble assembly code
 $(BUILD_DIR)/%.o: %.s
 	$(call print,Assembling:,$<,$@)
-	$(V)$(CC) -c $(CFLAGS) $(foreach i,$(INCLUDE_DIRS),-Wa,-I$(i)) -x assembler-with-cpp  -DMIPSEB -D_LANGUAGE_ASSEMBLY -D_ULTRA64 -MMD -MF $(BUILD_DIR)/$*.d  -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(foreach i,$(INCLUDE_DIRS),-Wa,-I$(i)) -x assembler-with-cpp  -DMIPSEB -D_LANGUAGE_ASSEMBLY -D_ULTRA64 -MMD -MP -o $@ $<
 
 # Creating final library file
 $(LIB): $(O_FILES)
