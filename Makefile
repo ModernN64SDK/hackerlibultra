@@ -195,7 +195,22 @@ $(BUILD_DIR_BASE)/libultra_rom.a:
 	$(V)$(MAKE) TARGET=libultra_rom
 	$(V)cp $(BUILD_DIR_BASE)/libultra_rom/libultra_rom.a $(BUILD_DIR_BASE)
 
-include install.mk
+install: all
+	$(V)mkdir -p /opt/crashsdk/mips64-elf/lib/ /opt/crashsdk/mips64-elf/include/ /opt/crashsdk/mips64-elf/include/PR
+	@$(PRINT) "$(GREEN)Copying libultra.a$(NO_COL)\n"
+	$(V)cp $(BUILD_DIR_BASE)/libultra.a /opt/crashsdk/mips64-elf/lib/libultra.a
+	@$(PRINT) "$(GREEN)Copying libultra_d.a$(NO_COL)\n"
+	$(V)cp $(BUILD_DIR_BASE)/libultra_d.a /opt/crashsdk/mips64-elf/lib/libultra_d.a
+	@$(PRINT) "$(GREEN)Copying libultra_rom.a$(NO_COL)\n"
+	$(V)cp $(BUILD_DIR_BASE)/libultra_rom.a /opt/crashsdk/mips64-elf/lib/libultra_rom.a
+	@$(PRINT) "$(GREEN)Copying assert.h$(NO_COL)\n"
+	$(V)cp include/assert.h /opt/crashsdk/mips64-elf/include/assert.h
+	@$(PRINT) "$(GREEN)Copying ultra64.h$(NO_COL)\n"
+	$(V)cp include/ultra64.h /opt/crashsdk/mips64-elf/include/ultra64.h
+	@$(PRINT) "$(GREEN)Copying ultrahost.h$(NO_COL)\n"
+	$(V)cp include/ultrahost.h /opt/crashsdk/mips64-elf/include/ultrahost.h
+	@$(PRINT) "$(GREEN)Copying PR headers$(NO_COL)\n"
+	$(V)cp -r include/PR /opt/crashsdk/mips64-elf/include/PR
 
 .PHONY: clean default all install pkginstall
 # with no prerequisites, .SECONDARY causes no intermediate target to be removed
