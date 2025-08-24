@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [[libultra, libultra_d, libultra_rom]]
+        version: [libultra, libultra_d, libultra_rom]
 
     steps:
     - name: Checkout repository
