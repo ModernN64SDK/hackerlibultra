@@ -79,6 +79,22 @@ SRC_DIRS += $(shell find src -type d)
 C_FILES           := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 S_FILES           := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.s))
 
+
+ifeq ($(TARGET),libultra_rom)
+DEBUGCODE := src/gt/dumpturbo.c src/debug/assert.c src/debug/assertbreak.s \
+			 src/error/errorasm.s src/error/commonerror.c src/log/delay.s \
+			 src/os/exit.c src/log/logfloat.c src/log/log.c \
+			 src/gu/parse_gbi.c src/gu/parse_rdp.c src/gu/parse_string.c \
+			 src/rg/printregion.c src/debug/profile.c src/host/readhost.c \
+			 src/os/testhost.c src/host/writehost.c src/os/seterrorhandler.c \
+			 src/debug/threadprofileclear.c src/debug/threadprofileinit.c \
+			 src/debug/threadprofile.c src/debug/threadprofilereadcount.c \
+			 src/debug/threadprofilereadtime.c src/debug/threadprofilestart.c \
+			 src/debug/threadprofilestop.c
+C_FILES := $(filter-out $(DEBUGCODE),$(C_FILES))
+S_FILES := $(filter-out $(DEBUGCODE),$(S_FILES))
+endif
+
 # Object files
 O_FILES := $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file:.c=.o)) \
            $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file:.s=.o))
@@ -145,10 +161,6 @@ ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS))
 
 # Make sure build directory exists before compiling anything
 $(shell mkdir -p $(ALL_DIRS))
-
-ifeq ($(TARGET),libultra_rom)
-C_FILES := $(filter-out src/gt/dumpturbo.c,$(C_FILES))
-endif
 
 $(BUILD_DIR)/src/voice/%.o: CFLAGS += -I$(WORKING_DIR)/src/voice
 $(BUILD_DIR)/src/voice/%.o: DEFINES += LANG_JAPANESE=1
