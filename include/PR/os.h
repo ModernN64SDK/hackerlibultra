@@ -46,7 +46,6 @@
 #include <PR/os_cache.h>
 #include <PR/os_debug.h>
 #include <PR/os_error.h>
-#include <PR/os_gio.h>
 #include <PR/os_reg.h>
 #include <PR/os_system.h>
 #include <PR/os_eeprom.h>

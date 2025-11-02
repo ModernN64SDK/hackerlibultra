@@ -146,6 +146,10 @@ ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS))
 # Make sure build directory exists before compiling anything
 $(shell mkdir -p $(ALL_DIRS))
 
+ifeq ($(TARGET),libultra_rom)
+C_FILES := $(filter-out src/gt/dumpturbo.c,$(C_FILES))
+endif
+
 $(BUILD_DIR)/src/voice/%.o: CFLAGS += -I$(WORKING_DIR)/src/voice
 $(BUILD_DIR)/src/voice/%.o: DEFINES += LANG_JAPANESE=1
 $(BUILD_DIR)/src/gu/parse_gbi.o: GBIDEFINE := -DF3D_GBI
