@@ -86,7 +86,7 @@ DEBUGCODE := src/gt/dumpturbo.c src/debug/assert.c src/debug/assertbreak.s \
 			 src/os/exit.c src/log/logfloat.c src/log/log.c \
 			 src/gu/parse_gbi.c src/gu/parse_rdp.c src/gu/parse_string.c \
 			 src/rg/printregion.c src/debug/profile.c src/host/readhost.c \
-			 src/os/testhost.c src/host/writehost.c src/os/seterrorhandler.c \
+			 src/host/writehost.c src/os/seterrorhandler.c \
 			 src/debug/threadprofileclear.c src/debug/threadprofileinit.c \
 			 src/debug/threadprofile.c src/debug/threadprofilereadcount.c \
 			 src/debug/threadprofilereadtime.c src/debug/threadprofilestart.c \
