@@ -16,6 +16,8 @@
  *
  */
 
+#ifndef _FINALROM
+
 #include <ultra64.h>
 #include <gt.h>
 #include "PRinternal/macros.h"
@@ -220,3 +222,4 @@ void gtDumpTurbo(OSTask* tp, u8 flags) {
      *
      */
 }
+#endif
