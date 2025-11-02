@@ -53,7 +53,7 @@ void __osProfileIO(void* arg) {
             totalBytes = t->histo_size * 2;
             sendPtr = t->histo_base;
             while (totalBytes > 0) {
-                bytesThisBlock = (totalBytes < 0x800U) ? totalBytes : 0x800U;
+                bytesThisBlock = (totalBytes < 0x800) ? totalBytes : 0x800;
 
                 ct = 0;
                 while (ct < bytesThisBlock) {
