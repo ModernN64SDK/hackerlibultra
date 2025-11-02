@@ -1,3 +1,4 @@
+#ifndef _FINALROM
 #include "osint_debug.h"
 
 void osThreadProfileClear(OSId id) {
