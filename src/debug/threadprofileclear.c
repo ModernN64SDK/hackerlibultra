@@ -9,3 +9,4 @@ void osThreadProfileClear(OSId id) {
 
     __osRestoreInt(saveMask);
 }
+#endif

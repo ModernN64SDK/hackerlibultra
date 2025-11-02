@@ -1,3 +1,4 @@
+#ifndef _FINALROM
 #include "osint_debug.h"
 
 #include "PRinternal/macros.h"
@@ -20,3 +21,4 @@ void osThreadProfileCallback(OSThread* osthread) {
     __osThprofCount++;
     __osThprofLastTimer = now_time;
 }
+#endif
