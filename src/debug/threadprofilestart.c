@@ -1,4 +1,5 @@
 #include "osint_debug.h"
+#ifndef _FINALROM
 
 void osThreadProfileStart(void) {
     register u32 saveMask;
@@ -20,3 +21,4 @@ void osThreadProfileStart(void) {
     __osThprofFunc = osThreadProfileCallback;
     __osRestoreInt(saveMask);
 }
+#endif

@@ -136,8 +136,6 @@ LEAF(__osException)
     sd      $10, THREAD_GP10(k0)
     /* Mark FPU as unused */
     sw      zero, THREAD_FP(k0)
-    /* This instruction is useless, leftover because of bad placement of an ifdef for the debug version */
-    MFC0(   t0, C0_CAUSE)
 
 savecontext:
     /* Save the context of the previously running thread to be restored when it resumes */

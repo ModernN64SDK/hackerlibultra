@@ -5,47 +5,6 @@
 #include "sgidefs.h"
 #include "PR/R4300.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #define EXC(code) (EXC_##code >> CAUSE_EXCSHIFT)
 
 .text

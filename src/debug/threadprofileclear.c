@@ -1,3 +1,4 @@
+#ifndef _FINALROM
 #include "osint_debug.h"
 
 void osThreadProfileClear(OSId id) {
@@ -9,3 +10,4 @@ void osThreadProfileClear(OSId id) {
 
     __osRestoreInt(saveMask);
 }
+#endif
